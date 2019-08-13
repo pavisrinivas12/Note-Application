@@ -1,0 +1,205 @@
+    body{
+        border: 2px solid black;
+        box-sizing: content-box;
+        margin-top: 1%;
+        margin-left: 7%;
+        width: 930px;
+        height: 520px;
+        border-radius : 25px;
+    }
+
+    label
+    {
+      text-align: center;
+    }
+    textarea
+    {
+        width:300px;
+        height:100px;
+    }
+
+    #formColor
+    {
+        font-size: 10px;
+        font-style: normal;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+
+    textarea:focus
+    {
+       border-block-color: aliceblue;
+    }
+
+    #btn_update
+    {
+        font: 500;
+        background-color: aliceblue;
+        border: 1px solid skyblue;
+    }
+
+    header
+    {
+        text-align: center;
+        background-color:  aliceblue;
+        margin-top: 2%;
+        color:black;
+        font-size: 15px;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        border: 5px solid aliceblue;
+        margin-left: 4.3%;
+        width: 840px;
+        margin-top: 1%;
+        
+    }
+
+    footer{
+        text-align: center;
+        color:black;
+        font-size: 15px;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        bottom: 100;
+        width: 840px;
+        margin-left: 3.2%;
+        position: absolute;
+        border: 5px solid aliceblue;
+        background-color: aliceblue;
+
+    }
+
+    button
+    {
+        background-color: aliceblue;
+        border: none;
+    }
+
+    .fas{
+
+        font-size: 15px;
+        color: black;
+        
+    }
+
+    .buttons_wrapper
+    {
+        float:right;
+        text-align: center;
+        background-color: inherit; 
+    }
+
+    .text_wrapper
+    {
+        float:left;
+        width: 68%;
+        overflow:hidden;
+        word-wrap: break-word;
+        background-color: inherit;
+    }
+
+    .fa
+    {
+        height: 30px;
+        width: 30px;
+        font-size: 25px;
+    }
+
+    .fa:hover
+    {
+        font-size: 30px;
+        text-shadow: 2px 2px 5px gray;
+    }
+
+    #contents
+    {
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        padding-left: 0;
+        list-style: none;
+        text-align: left;
+    }
+
+    #section1
+    {
+        text-align: center;
+        margin: 2px;
+        padding: 2px;
+        position: absolute;
+        top: 60px;
+        left: 130px;  
+        width: 220px;
+        height: 400px;
+        border: 1px solid;
+        overflow: scroll;  
+    }
+
+    #section2
+    {
+        text-align: center;
+        margin: 2px;
+        padding: 2px;
+        position: absolute;
+        top: 60px;
+        right: 300px;  
+        width: 600px;
+        height: 400px;
+        border: 1px solid;
+        
+    }
+
+    .listitem
+    {
+        margin: 4px;
+        padding: 2px;
+        background-color:aliceblue;
+        overflow: hidden;
+        white-space: nowrap; 
+        width: 180px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .listitem:hover
+    {
+      box-shadow: 2px 2px 5px gray;
+    }
+
+    #nocontent
+    {
+      text-transform: inherit;
+      display: none;
+      color: black;
+      font-weight: 400;
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+ 
+    #btn_update,#btn_save,#btn_discard,#btn_clear {
+      border-radius: 4px;
+      background-color: aliceblue;
+      border: none;
+      color: black ;
+      text-align: center;
+      font-size: 10px;
+      padding: 10px;
+      transition: all 0.5s;
+      cursor: pointer;
+      margin: 5px;
+      width:10%;
+    }
+    
+    #btn_save:hover
+    {
+      box-shadow: 2px 2px 5px gray;
+    }
+    
+    #btn_clear:hover
+    {
+      box-shadow: 2px 2px 5px gray;
+    }
+
+    #btn_discard:hover
+    {
+      box-shadow: 2px 2px 5px gray;
+    }
+
+    #btn_update:hover
+    {
+      box-shadow: 2px 2px 5px gray;
+    }

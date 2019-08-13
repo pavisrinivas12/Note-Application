@@ -1,0 +1,332 @@
+<html>
+
+<head>
+
+    <title>
+        Note Application
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styling.css" type="text/css">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+    <script>
+
+        $(document).ready(function () {
+            displaydata()
+        });
+        var editing = null;
+        var editingNode = null;
+
+        var notes = [];
+
+        function show() {
+
+            var formdisplay = document.getElementById("addnote");
+            let formdata = document.getElementById("update");
+
+            if (formdata.style.display != "block") {
+                if (formdisplay.style.display == "none") {
+                    formdisplay.style.display = "block";
+                }
+                else {
+                    formdisplay.style.display = "none";
+                }
+            }
+        }
+        function clearnotes() {
+            document.getElementById("textdata").value = "";
+        }
+
+        function discarddata() {
+            clearnotes();
+            var formdisplay = document.getElementById("addnote");
+            formdisplay.style.display = "none";
+        }
+
+        function displaydata() {
+
+            notes = JSON.parse(localStorage.getItem("notes"));
+            if (notes != null) {
+                notes.forEach(function (note) {
+                    document.getElementById("contents").appendChild(add_listElement(note[0], note[1]));
+                });
+            }
+            else {
+                notes = [];
+                var nocontent = document.getElementById("nocontent").style;
+                if (nocontent.display = "none") {
+                    nocontent.display = "block";
+                }
+                else {
+                    nocontent.display = "none";
+                    document.getElementById("nocontents").textContent = "No Existing Notes. Click + to Add Notes.";
+                }
+            }
+        }
+
+        function add_listElement(text, color) {
+
+            let listelement = document.createElement("li");
+            listelement.className = "listitem";
+
+            let spancontent = document.createElement('span');
+            spancontent.className = 'text_wrapper';
+
+            let spanelement = document.createElement('span');
+            spanelement.className = 'buttons_wrapper';
+
+            let deletebutton = document.createElement("button");
+            deletebutton.className = "deletebutton";
+            deletebutton.onclick = deletenote;
+
+            let updatebutton = document.createElement("button");
+            updatebutton.className = "updatebutton";
+            updatebutton.onclick = editnote;
+
+            spancontent.innerHTML = text;
+            deletebutton.innerHTML = `<i class='fas fa-trash'></i>`;
+            updatebutton.innerHTML = `<i class='fas fa-pencil-alt'> </i>`;
+
+            if (color == "red") {
+                listelement.style.backgroundColor = "coral";
+                spancontent.style.backgroundColor = "coral";
+                spanelement.style.backgroundColor = "coral";
+                deletebutton.style.backgroundColor = "coral";
+                updatebutton.style.backgroundColor = "coral";
+            }
+
+            else if (color == "blue") {
+                listelement.style.backgroundColor = "skyblue";
+                spancontent.style.backgroundColor = "skyblue";
+                spanelement.style.backgroundColor = "skyblue";
+                deletebutton.style.backgroundColor = "skyblue";
+                updatebutton.style.backgroundColor = "skyblue";
+            }
+
+            else if (color == "green") {
+                listelement.style.backgroundColor = "green";
+                spancontent.style.backgroundColor = "green";
+                spanelement.style.backgroundColor = "green";
+                deletebutton.style.backgroundColor = "green";
+                updatebutton.style.backgroundColor = "green";
+            }
+
+            else if (color == "yellow") {
+                listelement.style.backgroundColor = "gold";
+                spancontent.style.backgroundColor = "gold";
+                spanelement.style.backgroundColor = "gold";
+                deletebutton.style.backgroundColor = "gold";
+                updatebutton.style.backgroundColor = "gold";
+            }
+
+            else if (color == "gray") {
+                listelement.style.backgroundColor = "gray";
+                spancontent.style.backgroundColor = "gray";
+                spanelement.style.backgroundColor = "gray";
+                deletebutton.style.backgroundColor = "gray";
+                updatebutton.style.backgroundColor = "gray";
+            }
+
+            spanelement.appendChild(deletebutton);
+            spanelement.appendChild(updatebutton);
+            listelement.appendChild(spancontent);
+            listelement.appendChild(spanelement);
+
+            return listelement;
+        }
+
+        function addnotes() {
+
+            let notecontent = document.getElementById("textdata").value;
+            let color = document.getElementById("formColor").value;
+
+            var con = [notecontent, color];
+
+            if (notecontent != "") {
+                notes.push(con);
+                localStorage.setItem("notes", JSON.stringify(notes));
+                document.getElementById("contents").appendChild(add_listElement(notecontent, color));
+                discarddata();
+            }
+            else {
+                alert("No content");
+                discarddata();
+            }
+
+            location.reload();
+        }
+
+        function findIndex(element) {
+
+            let list = Array.from(document.getElementsByClassName('listitem'));
+            return (list.indexOf(element));
+        }
+
+        function editnote() {
+
+            var ind = findIndex(this.parentElement.parentElement);
+            var contentoftextarea = this.parentElement.parentElement.textContent;
+
+            var formdata = document.getElementById("addnote");
+            var displaynote = document.getElementById("update");
+
+            if (formdata.style.display != "block") {
+                if (displaynote.style.display == "none") {
+                    displaynote.style.display = "block";
+                    editingNode = this;
+                    editing = ind;
+                }
+                else {
+                    editing = null;
+                    editingNode = null;
+                    displaynote.style.display = "none";
+                }
+            }
+
+            document.getElementById("textdat").innerHTML = contentoftextarea;
+        }
+
+        function changeBGColorOfParent(parent_node,color){
+
+            parent_node.style.backgroundColor=color;
+            console.log(parent_node);
+            child_nodes=Array.from(parent_node.children);
+            child_nodes.forEach(function (node) 
+            {
+                    changeBGColorOfParent(node,color);
+                    console.log(node);
+            });
+        }
+
+
+        function updatenote() {
+
+            var x = document.getElementById("update").style;
+
+            if (editing != null) {
+
+                let textvalue = document.getElementById("textdat").value;
+                var y = document.getElementById("formColorupdate").value;
+                let cont = [textvalue, y];
+
+                if (y == "red") {
+                    changeBGColorOfParent(editingNode.parentElement.parentElement,"coral");
+                }
+
+                else if (y == "blue") {
+                    changeBGColorOfParent(editingNode.parentElement.parentElement,"skyblue");
+                    
+                }
+
+                else if (y == "green") {
+                    changeBGColorOfParent(editingNode.parentElement.parentElement,"green");
+                    
+                }
+
+                else if (y == "yellow") {
+                    changeBGColorOfParent(editingNode.parentElement.parentElement,"gold");
+                    
+                }
+
+                else if (y == "gray") {
+                    changeBGColorOfParent(editingNode.parentElement.parentElement,"gray");
+
+                }
+
+                editingNode.parentElement.parentElement.children[0].innerHTML = textvalue;
+                notes[editing] = cont;
+                localStorage.setItem('notes', JSON.stringify(notes));
+
+            }
+
+            x.display = "none";
+
+        }
+
+        function deletenote() {
+
+            let ind = findIndex(this.parentElement.parentElement);
+            //console.log(ind);
+            this.parentElement.parentElement.remove();
+            if (notes.length > 1) {
+                notes.splice(ind, 1);
+            }
+            else {
+                notes = [];
+                notes = [];
+                var nocontent = document.getElementById("nocontent").style;
+                if (nocontent.display = "none") {
+                    nocontent.display = "block";
+                }
+                else {
+                    nocontent.display = "none";
+                }
+            }
+            localStorage.setItem("notes", JSON.stringify(notes));
+        }
+
+    </script>
+</head>
+
+<body>
+    <header>
+        Notes Application
+    </header>
+
+    <div id="section1">
+        <i class="fa fa-plus" onclick="show()"></i>
+        <br>
+        <div id="nocontent"> No Notes to Display. Click + to Add a Note </div>
+        <br>
+        <ul id="contents">
+        </ul>
+    </div>
+
+    <div id="section2">
+        <div id="addnote" style="display:none">
+            <br>
+            <label><strong>Add a Note</strong></label>
+            <br><br>
+            <textarea id="textdata" placeholder="Enter the content"></textarea>
+            <br><br>
+            <label><strong>Select a Color:</strong></label>
+            <select id="formColor">
+                <option selected hidden style="display:none"></option>
+                <option value="red">Red</option>
+                <option value="blue">Blue</option>
+                <option value="green">Green</option>
+                <option value="gray">Grey</option>
+                <option value="yellow">Yellow</option>
+            </select>
+            <br><br>
+            <button id="btn_save" onclick="addnotes()">Add</button>
+            <button id="btn_clear" onclick="clearnotes()">Clear</button>
+            <button id="btn_discard" onclick="discarddata()">Discard</button>
+        </div>
+        <div id="update" style="display:none">
+            <br>
+            <label><strong>Update Note</strong> </label><br><br>
+            <textarea id="textdat" placeholder="Enter the content"></textarea><br><br>
+            <label><strong>Update the Color:</strong></label>
+            <select id="formColorupdate">
+                <option selected hidden style="display:none"></option>
+                <option value="red">Red</option>
+                <option value="blue">Blue</option>
+                <option value="green">Green</option>
+                <option value="gray">Grey</option>
+                <option value="yellow">Yellow</option>
+            </select>
+            <br><br>
+            <button id="btn_update" onclick="updatenote()">Update</button>
+        </div>
+    </div>
+
+    <footer>
+        Copyrights &#9400; Pavithra Giri
+    </footer>
+</body>
+
+</html>
